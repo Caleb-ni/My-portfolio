@@ -1,38 +1,65 @@
-import React from 'react'
+import { list } from 'postcss';
+import React, { useRef } from 'react'
 
-const Navbar = () => {
+// COMPONENT
+
+// Node Module
+
+
+const Navbar = ({navOpen}) => { 
+  
+  const lastActiveLink = useRef();
+  const activeBox = useRef(); 
+
+  const navItems = [
+    {
+      label: 'Home',
+      link: '#home',
+      className: 'nav-link active',
+      ref: lastActiveLink
+    },
+    {
+      label: 'About',
+      link: '#about',
+      className: 'nav-link'
+    },
+    {
+      label: 'Work',
+      link: '#work',
+      className: 'nav-link'
+    },
+    {
+      label: 'Reviews',
+      link: '#reviews',
+      className: 'nav-link'
+    },
+    {
+      label: 'Contact',
+      link: '#contact',
+      className: 'nav-link md:hidden'
+    }
+  ];
+
   return (
-    <header className='fixed w-full top-0 left-0 h-20 flex items-center z-40 bg-gradient-to-b from-zinc-900 to-zinc-900/0'>
-      <div className="max-w-screen-2xl w-full m-auto px-4 flex justify-between items-center md:px-6 md:grid md:grid-cols-[1fr,3fr,1fr]">
-        <h1>
-          <a href="">
-            <img 
-            src="/assets/logo.png" 
-            className='bg-white rounded-full'
-            width={40}  
-            height={40}
-            alt="logo"/>
-          </a>
-        </h1>
-
-        <div className="relative md:justify-self-center">
-          <button 
-          className=''
+    <nav className={"navbar" + navOpen ? "active" : ""}>
+      {
+        navItems.map(({label, link, className, ref}, key) => (
+          <a 
+          href={link}
+          key={key}
+          ref={ref}
+          className={className}
           onClick={null}
           >
-            <span><img src="assets/icon/menu.png" alt="" /></span>
-          </button>
-        </div>
-
-        <div>
-          <a href="#contact"
-             className=''
-          >
-            Contact me
+            {label}
           </a>
-        </div>
-      </div>
-    </header>
+        ))  
+      }
+      <div
+      className='active-box'
+      ref={activeBox}
+      ></div>
+    </nav>
   ) 
 }
 
